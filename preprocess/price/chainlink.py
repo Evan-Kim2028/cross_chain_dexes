@@ -22,6 +22,7 @@ df = df.sort('timestamp')
 df = df.with_columns(
     pl.from_epoch("timestamp"),
     price= pl.col("price") / 10 ** 8,
+    blockchain=pl.lit('chainlink')
 )
 
 # save df
