@@ -11,11 +11,11 @@ pl.Config.set_fmt_str_lengths(200)
 sgi = SubgraphInterface(endpoints='https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps')
 
 # make a folder called data
-if not os.path.exists('data/perps'):
-    os.makedirs('data/perps')
+if not os.path.exists('data/perps_raw'):
+    os.makedirs('data/perps_raw')
 
 for subgraph in list(sgi.subject.subgraphs.keys()):
-    os.makedirs(f'data/perps/{subgraph}', exist_ok=True)
+    os.makedirs(f'data/perps_raw/{subgraph}', exist_ok=True)
 
 
 ########################################################
@@ -60,7 +60,7 @@ def process_subgraph(subgraph, start_date, end_date):
         filter_dict=filter,
         orderBy='timestamp',
         # graphql_query_fmt=True,
-        saved_file_name=f'data/perps/{subgraph}/{subgraph}_swaps_{start_date.strftime("%m-%d")}_{end_date.strftime("%m-%d")}'
+        saved_file_name=f'data/perps_raw/{subgraph}/{subgraph}_swaps_{start_date.strftime("%m-%d")}_{end_date.strftime("%m-%d")}'
         )
 
 

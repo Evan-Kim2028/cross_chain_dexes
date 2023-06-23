@@ -11,11 +11,11 @@ pl.Config.set_fmt_str_lengths(200)
 sgi = SubgraphInterface(endpoints='https://api.thegraph.com/subgraphs/name/openpredict/chainlink-prices-subgraph')
 
 # make a folder called data
-if not os.path.exists('data/prices'):
-    os.makedirs('data/prices')
+if not os.path.exists('data/prices_raw'):
+    os.makedirs('data/prices_raw')
 
 for subgraph in list(sgi.subject.subgraphs.keys()):
-    os.makedirs(f'data/prices/{subgraph}', exist_ok=True)
+    os.makedirs(f'data/prices_raw/{subgraph}', exist_ok=True)
 
 
 ########################################################
@@ -39,7 +39,7 @@ def process_subgraph(subgraph, start_date, end_date):
         filter_dict=filter,
         orderBy='timestamp',
         # graphql_query_fmt=True,
-        saved_file_name=f'data/prices/{subgraph}/{subgraph}_swaps_{start_date.strftime("%m-%d")}_{end_date.strftime("%m-%d")}'
+        saved_file_name=f'data/prices_raw/{subgraph}/eth_usd_{start_date.strftime("%m-%d")}_{end_date.strftime("%m-%d")}'
         )
 
 
