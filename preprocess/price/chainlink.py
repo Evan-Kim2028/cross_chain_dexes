@@ -21,7 +21,7 @@ df = df.sort('timestamp')
 # convert timestamp to datetime
 df = df.with_columns(
     pl.from_epoch("timestamp"),
-    price= pl.col("price") / 10 ** 6,
+    price= pl.col("price") / 10 ** 8,
 )
 
 # save df
