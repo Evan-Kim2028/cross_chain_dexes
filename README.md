@@ -23,5 +23,5 @@ Pyth does not have a subgraph or api to query historical data. Data was kindly p
 There are two preprocessing folders. `dex` preprocesses concentrated liquidity dex files and `price` preprocesses the chainlink files. Files that retrieved from subgraphs require extra preprocessing because they are broken down into daily files and need to be combined. 
 
 # Charts
-Jupyter notebooks used to create the charts are in the `chart_notebooks` folder. Each one can be run in independent order. Note that some charts are saved with a custom formatting library that is not included in this repo that uses a pre-defined color scheme and font from matplotlib. Charts are saved in the `charts` folder.
+Jupyter notebooks used to create the charts are not contained in a subfolder. The primary reason is due to import errors that occur if the notebooks are contained in a folder. Each one can be run in independent order. Note that some charts are saved with a custom formatting library that is not included in this repo that uses a pre-defined color scheme and font from matplotlib. Charts are saved in the `charts` folder.
 
