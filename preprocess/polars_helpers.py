@@ -1,6 +1,12 @@
 import polars as pl
 
+################################################
+# polars_helpeers are some helper functions that 
+# notebooks use to filter and aggregate data.
 
+# they are stored here and then called into the 
+# notebooks for organization purposes
+###############################################
 def filter_swap_pairs(df_filepaths: str, token_0: str, token_0_decimal: int, token_1: str, token_1_decimal: int) -> pl.DataFrame:
     '''
     Filter data for a specific swap pair of tokens
