@@ -8,18 +8,19 @@ pl.Config.set_fmt_str_lengths(200)
 
 
 # Load decentralized endpoints
-sgi = SubgraphInterface(endpoints={
-    # 'uniswap-v3-ethereum': 'https://api.playgrounds.network/v1/proxy/subgraphs/id/G3JZhmKKHC4mydRzD6kSz5fCWve5WDYYCyTFSJyv3SD5',
-    'pancake-v3-bsc': 'https://api.playgrounds.network/v1/proxy/deployments/id/Qmcp4UuinsKhLJQoL3c5iyWXkyy7DoHnztyyjRw5b6UQ3m'
-    
-})
+sgi = SubgraphInterface(endpoints=[
+    # 'https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-arbitrum',
+    'https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-optimism',
+    # 'https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-polygon',
+    # 'https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-ethereum'
+])
 
 # make a folder called data
 if not os.path.exists('data'):
     os.makedirs('data')
 
 for subgraph in list(sgi.subject.subgraphs.keys()):
-    os.makedirs(f'data/{subgraph}', exist_ok=True)
+    os.makedirs(f'data/univ3_raw/{subgraph}', exist_ok=True)
 
 
 ########################################################
@@ -44,7 +45,7 @@ query_paths = [
 
 
 
-query_size = 175000
+query_size = 1500000
 
 # ASYNC STUFF
 def process_subgraph(subgraph, start_date, end_date):
@@ -62,15 +63,16 @@ def process_subgraph(subgraph, start_date, end_date):
         filter_dict=filter,
         orderBy='timestamp',
         # graphql_query_fmt=True,
-        saved_file_name=f'data/{subgraph}/{subgraph}_swaps_{start_date.strftime("%m-%d")}_{end_date.strftime("%m-%d")}'
+        saved_file_name=f'data/univ3_raw/{subgraph}/{subgraph}_swaps_{start_date.strftime("%m-%d")}_{end_date.strftime("%m-%d")}'
         )
 
+    print(f'queried {subgraph} from {start_date.strftime("%m-%d")} to {end_date.strftime("%m-%d")}')
 
 
 
 async def main():
     subgraph_keys = list(sgi.subject.subgraphs.keys())
-    date_ranges = [(start_date, start_date + timedelta(days=1)) for start_date in [datetime(2023, 4, 2) + timedelta(days=i) for i in range(0, 59, 1)]]
+    date_ranges = [(start_date, start_date + timedelta(days=1)) for start_date in [datetime(2023, 5, 31) + timedelta(days=i) for i in range(0, 31, 1)]]
 
     await asyncio.gather(*[asyncio.to_thread(process_subgraph, subgraph, start_date, end_date) for subgraph, (start_date, end_date) in itertools.product(subgraph_keys, date_ranges)])
 
@@ -78,3 +80,6 @@ async def main():
 # Run the asyncio event loop
 asyncio.run(main())
 ########################################################
+
+# 5.2gb 9:05am
+# 5.6gb 11:41am
